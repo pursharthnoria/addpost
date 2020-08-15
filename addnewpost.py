@@ -1,6 +1,14 @@
 from flask import Flask,jsonify,redirect,render_template
+import os
+import time
 
 app = Flask(__name__)
+
+files = os.listdir('templates')
+for file in files:
+  t = os.path.getmtime('templates\\'+file)
+  if time.time() > t+(10*24*60*60):
+    os.remove('templates\\'+file)
 
 @app.route('/newpost/<string:name>/<string:content>')
 def showhtml(name,content):
